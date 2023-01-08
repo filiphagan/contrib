@@ -13,13 +13,16 @@ learning.
 
 ## Prerequisites
 
+Install Gramine following the [quickstart quide.](https://gramine.readthedocs.io/en/latest/quickstart.html#install-gramine)
+
 ### For building curated GSC image
 - No hardware requirements.
 - Any regular system with a Linux distribution is sufficient.
 - Install the necessary build dependencies as shown below (for Ubuntu).
 ```sh
  $ sudo apt-get update && sudo apt-get install jq docker.io python3 python3-pip
- $ pip3 install docker jinja2 toml pyyaml
+ $ python3 -m pip install --upgrade pip
+ $ python3 -m pip install docker jinja2 toml pyyaml
  $ sudo chown $USER /var/run/docker.sock
 ```
 

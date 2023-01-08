@@ -21,3 +21,14 @@ We welcome contributions through GitHub pull requests. Please keep in mind that
 they are governed by `the same rules as the main project
 <https://gramine.readthedocs.io/en/latest/devel/contributing.html>`_, modulo
 more forgiving reviews.
+
+Contents
+========
+
+Contents description::
+
+    .
+    |-- Curated-Apps/           # interactive script to graminize Docker images with reference workloads
+    |-- Documentantion/         # documentation template for https://gramine.readthedocs.io/projects/contrib/
+    |-- Examples/               # AKS examples
+    |-- Integrations/           # AKV enclave signing

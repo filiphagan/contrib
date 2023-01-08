@@ -20,18 +20,25 @@ Execute the below commands on the VM.
    dockerfiles and instructions to create a test PyTorch base image. This base image is then passed
    to the curation application `curate.py` as shown below.
 
-4. To generate a preconfigured non-production test confidential compute image for PyTorch,  follow
+5. To generate a preconfigured non-production test confidential compute image for PyTorch,  follow
    the below steps:
-   1. Generate a sample PyTorch application image `pytorch-encrypted`:
+   1. Install all necessary prerequisites:
+
+          $ sudo apt install libnss-mdns libnss-myhostname
+          $ sudo apt install python3-pip lsb-release
+          $ python3 -m pip install --upgrade pip
+          $ python3 -m pip install --user torchvision pillow
+
+   2. Generate a sample PyTorch application image `pytorch-encrypted`:
 
           $ /bin/bash workloads/pytorch/base_image_helper/helper.sh
 
-   2. Generate the test confidential compute image based on the `pytorch-encrypted` image  as shown 
+   3. Generate the test confidential compute image based on the `pytorch-encrypted` image  as shown 
       below:
 
           $ python3 ./curate.py pytorch pytorch-encrypted test
 
-5. To generate a custom confidential compute image based on a user-provided PyTorch image, execute
+6. To generate a custom confidential compute image based on a user-provided PyTorch image, execute
    the following to launch an interactive setup script:
 
        $ python3 ./curate.py pytorch <base_image_with_pytorch>
@@ -40,6 +47,16 @@ Execute the below commands on the VM.
 
 - This example was tested on a Standard_DC8s_v3 Azure VM.
 - Follow the output of the `curate.py` script to run the generated Docker image(s).
+
+## Retrieve and decrypt the results (for preconfigured non-production test image)
+
+    $ docker cp $(docker ps -aqf "ancestor=gsc-pytorch-encrypted"):/workspace/result.txt .
+    $ gramine-sgx-pf-crypt decrypt -w ~/contrib/Curated-Apps/workloads/pytorch/base_image_helper/encryption_key -i result.txt -o result_plaintext.txt
+    $ cat result_plaintext.txt
+
+Expected result (default imput data):
+    
+    [('Labrador retriever', 41.58518600463867), ('golden retriever', 16.59165382385254), ('Saluki, gazelle hound', 16.286855697631836), ('whippet', 2.853914976119995), ('Ibizan hound, Ibizan Podenco', 2.3924756050109863)]
 
 ## Contents
 This sub-directory contains artifacts which help in creating curated GSC PyTorch image, as explained
